@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="style.css" rel="stylesheet" type="text/css">
     {% block head %}
     {#
     Default HEAD content goes here
@@ -21,7 +22,8 @@
             <input type="submit" class="btn btn-success" value="שמירה">
         </form>
     </div>
-    <p>Dynamic = </p>
+    <hr/>
+    <h2>הוצאות קודמות החודש</h2>
     {{ db_expenses }}
 </body>
 </html>
