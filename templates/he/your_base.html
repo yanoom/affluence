@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+    {#
+    Default HEAD content goes here
+    with extra nested blocks for children to override
+    if needed.
+    #}
+    {% endblock head %}
+</head>
+<body>
+    <header>{% block header %}{% endblock header %}</header>
+    {# Note: This assumes we *always* want a header #}
+    {% block content %}{% endblock content %}
+    <h1>Affluence v0.1 beta</h1>
+    <div class="row">
+        <form action="add" method="POST">
+            <textarea class="form-control" name="contents" placeholder="תיאור"></textarea>
+            <input name="quantity">
+            <input type="submit" class="btn btn-success" value="שמירה">
+        </form>
+    </div>
+    <p>Dynamic = </p>
+    {{ db_expenses }}
+</body>
+</html>

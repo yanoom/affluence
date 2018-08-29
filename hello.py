@@ -1,8 +1,10 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Markup
 # from hashlib import sha256
 import MySQLdb
 
 app = Flask(__name__)
+
+app_language = "Hebrew" # "English"
 
 @app.route("/")
 def hello():
@@ -109,13 +111,14 @@ def sum():
 
 @app.route("/web")
 def index():
-    # comments = ("comment1", "comment2")
-    comments = ['physics', 'chemistry']
     return render_template("add_form.html")
 
 @app.route("/web2")
 def index2():
-    return render_template("your_base.html")
+    if ("Hebrew" == app_language):
+        return render_template("he/your_base.html", db_expenses=Markup(show()))
+    else:
+        return render_template("en/your_base.html", db_expenses=Markup(show()))
 
 if __name__ == "__main__":
     app.run()
