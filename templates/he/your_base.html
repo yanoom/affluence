@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8"> 
     <link href="/static/he/style.css" rel="stylesheet" type="text/css">
     {% block head %}
     {#
@@ -25,5 +26,8 @@
     <hr/>
     <h2>הוצאות קודמות החודש</h2>
     {{ db_expenses }}
+    <span><strong>סה"כ:</strong>
+        {{ db_sum }}
+    </span>
 </body>
 </html>

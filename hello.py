@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import Flask, request, render_template, Markup
 # from hashlib import sha256
 import MySQLdb
@@ -10,6 +13,7 @@ db = MySQLdb.connect(host="localhost",  # your host
                      user="root",  # username
                      passwd="mySqlDb6",  # password
                      db="import_schema")  # name of the database
+db_table_name = "expenses";
 
 def deb_execute_query(db, query, commit = False):
     # Create a Cursor object to execute queries.
@@ -35,53 +39,49 @@ def show():
     result = ""
 
     # Select data from table using SQL query.
-    select_query = "SELECT * FROM client_test" if request.args.get('showall') else "SELECT * FROM client_test WHERE deleted = 0"
+    select_query = "SELECT name, amount, paid, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT name, amount, paid, category FROM `" + db_table_name + "` WHERE deleted = 0;"
     cur = deb_execute_query(db, select_query)
 
     # print the first and second columns
     for row in cur.fetchall():
-        result += "<p>" + str(row[0]) + " " + row[1] + "</p>"
+        result += "<p>" + str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + str(row[3]) + "</p>"
 
-    sum_query = "SELECT SUM(data) FROM import_schema.client_test;"
-    cur = deb_execute_query(db, sum_query)
-    # print the first column
-    for row in cur.fetchall():
-        result += "<strong>" + str(row[0]) + "</strong>"
-
-    db.close()
     return result
 
 @app.route("/add/", methods=["GET", "POST"])
 def add():
-    insert_query = "INSERT INTO `import_schema`.`client_test` (`data`) VALUES ('" + request.args.get('num') + "');"
+    insert_query = "INSERT INTO `" + db_table_name + "` (`data`) VALUES ('" + request.args.get('num') + "');"
     deb_execute_query(db, insert_query)
 
-    db.close()
     return show()
 
 @app.route("/hard_remove/", methods=["GET", "POST"])
 def hard_remove():
 
-    delete_query = "DELETE FROM `import_schema`.`client_test` WHERE `idclient_test` = " + request.args.get('id') + ";"
+    delete_query = "DELETE FROM `" + db_table_name + "` WHERE `idclient_test` = " + request.args.get('id') + ";"
     deb_execute_query(db, delete_query, True)
 
-    db.close()
     return show()
 
 @app.route("/soft_delete/", methods=["GET", "POST"])
 def soft_delete():
 
-    update_query = "UPDATE`import_schema`.`client_test` SET `deleted` = 1 WHERE `idclient_test` = " + request.args.get('id') + ";"
+    update_query = "UPDATE `" + db_table_name + "` SET `deleted` = 1 WHERE `idclient_test` = " + request.args.get('id') + ";"
     deb_execute_query(db, update_query, True)
 
-    db.close()
     return show()
 
 @app.route("/sum/", methods=["GET", "POST"])
 def sum():
-    num = request.args.get('num')
-    result = "Adding numbers: " + str(num)
-#    result += "Checksum: " + str(num)
+    result = ""
+
+    # Select data from table using SQL query.
+    sum_query = "SELECT SUM(amount) FROM `" + db_table_name + "` WHERE deleted = 0;"
+    cur = deb_execute_query(db, sum_query)
+    # print the first column
+    for row in cur.fetchall():
+        result += "<strong>" + str(row[0]) + "</strong>"
+
     return result
 
 @app.route("/web")
@@ -91,9 +91,11 @@ def index():
 @app.route("/web2")
 def index2():
     if ("Hebrew" == app_language):
-        return render_template("he/your_base.html", db_expenses=Markup(show()))
+        return render_template("he/your_base.html", db_expenses=Markup(show()), db_sum=Markup(sum()))
     else:
         return render_template("en/your_base.html", db_expenses=Markup(show()))
 
 if __name__ == "__main__":
     app.run()
+
+#TODO: Find where to stick db.close() (if at all)
