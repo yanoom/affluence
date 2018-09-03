@@ -13,7 +13,7 @@ db = MySQLdb.connect(   host="localhost",       # your host
                         user="root",            # username
                         passwd="mySqlDb6",      # password
                         db="import_schema",     # name of the database
-                        charset="utf8")       # Show Hebrew correcly!!
+                        charset="utf8")         # Show Hebrew correctly!!
 db_table_name = "expenses";
 
 def deb_execute_query(db, query, commit = False):
@@ -28,7 +28,7 @@ def deb_execute_query(db, query, commit = False):
     except:
         if (commit):
             db.rollback()
-        return "Error occured: " + query
+        return "Error occurred: " + query
     return cur
 
 @app.route("/")
@@ -51,8 +51,16 @@ def show():
 
 @app.route("/add/", methods=["GET", "POST"])
 def add():
-    insert_query = "INSERT INTO `" + db_table_name + "` (`data`) VALUES ('" + request.args.get('num') + "');"
-    deb_execute_query(db, insert_query)
+    #Input validation
+    num_to_add = request.args.get('quantity')
+    description_to_add = request.args.get('desc')
+    if (not num_to_add.isnumeric()):
+        return
+
+    user_id = '1';
+    insert_query = "INSERT INTO `" + db_table_name + "` (`user`, `name`, `amount`, `paid`, `last_updated`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW());"
+
+    deb_execute_query(db, insert_query, True)
 
     return show()
 
