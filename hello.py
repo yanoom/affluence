@@ -9,10 +9,11 @@ app = Flask(__name__)
 
 app_language = "Hebrew" # "English"
 
-db = MySQLdb.connect(host="localhost",  # your host
-                     user="root",  # username
-                     passwd="mySqlDb6",  # password
-                     db="import_schema")  # name of the database
+db = MySQLdb.connect(   host="localhost",       # your host
+                        user="root",            # username
+                        passwd="mySqlDb6",      # password
+                        db="import_schema",     # name of the database
+                        charset="utf8")       # Show Hebrew correcly!!
 db_table_name = "expenses";
 
 def deb_execute_query(db, query, commit = False):
