@@ -15,6 +15,7 @@ db = MySQLdb.connect(   host="localhost",       # your host
                         db="import_schema",     # name of the database
                         charset="utf8")         # Show Hebrew correctly!!
 db_table_name = "expenses";
+settings_table_name = "settings";
 
 def deb_execute_query(db, query, commit = False):
     # Create a Cursor object to execute queries.
@@ -85,12 +86,24 @@ def soft_delete():
 def sum():
     result = ""
 
-    # Select data from table using SQL query.
+    # Select SUM query
     sum_query = "SELECT SUM(amount) FROM `" + db_table_name + "` WHERE deleted = 0;"
     cur = deb_execute_query(db, sum_query)
     # print the first column
     for row in cur.fetchall():
-        result += "<strong>" + str(row[0]) + "</strong>"
+        result += "<strong>" + str(row[0]) + "</strong><br />"
+        sum_this_month = row[0]
+
+    # Select monthly_budget query
+    monbudg_query = "SELECT valuesettings FROM `" + settings_table_name + "` WHERE `namesettings` = 'monthly_budget'";
+    cur = deb_execute_query(db, monbudg_query)
+    # print the first column
+    for row in cur.fetchall():
+        result += "<strong>העברת שפע רצויה: " + str(row[0]) + "</strong><br />"
+        monthly_budget = row[0]
+
+    # Show percentage calculation
+    result += "<strong>אחוז מהרצוי: " + str(round(((sum_this_month / monthly_budget)*100), 2)) + "%</strong>"
 
     return result
 
