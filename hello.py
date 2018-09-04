@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, render_template, Markup
+from flask import Flask, request, render_template, Markup, redirect
 # from hashlib import sha256
 import MySQLdb
 
@@ -40,12 +40,18 @@ def show():
     result = ""
 
     # Select data from table using SQL query.
-    select_query = "SELECT name, amount, paid, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT name, amount, paid, category FROM `" + db_table_name + "` WHERE deleted = 0;"
+    select_query = "SELECT idexpenses, name, amount, paid, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT idexpenses, name, amount, paid, category FROM `" + db_table_name + "` WHERE deleted = 0;"
     cur = deb_execute_query(db, select_query)
+
+    #Open form
+    result += "<form action=\"/soft_delete/\" method = \"GET\">"
 
     # print the first and second columns
     for row in cur.fetchall():
-        result += "<p>" + str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + str(row[3]) + "</p>"
+        result += "<p>" + str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + str(row[3]) + " " + str(row[4]) + " <input type='submit' class='btn btn-success' value='הסרה'> </p>"
+
+    #Close form
+    result += "</form>"
 
     return result
 
@@ -62,7 +68,8 @@ def add():
 
     deb_execute_query(db, insert_query, True)
 
-    return show()
+    #return show()
+    return redirect("/web2", code=302)
 
 @app.route("/hard_remove/", methods=["GET", "POST"])
 def hard_remove():
@@ -78,7 +85,7 @@ def soft_delete():
     update_query = "UPDATE `" + db_table_name + "` SET `deleted` = 1 WHERE `idclient_test` = " + request.args.get('id') + ";"
     deb_execute_query(db, update_query, True)
 
-    return show()
+    return redirect("/web2", code=302)
 
 @app.route("/sum/", methods=["GET", "POST"])
 def sum():
