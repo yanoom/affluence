@@ -43,15 +43,9 @@ def show():
     select_query = "SELECT idexpenses, name, amount, paid, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT idexpenses, name, amount, paid, category FROM `" + db_table_name + "` WHERE deleted = 0;"
     cur = deb_execute_query(db, select_query)
 
-    #Open form
-    result += "<form action=\"/soft_delete/\" method = \"GET\">"
-
     # print the first and second columns
     for row in cur.fetchall():
-        result += "<p>" + str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + str(row[3]) + " " + str(row[4]) + " <input type='submit' class='btn btn-success' value='הסרה'> </p>"
-
-    #Close form
-    result += "</form>"
+        result += "<form action=\"/soft_delete/\" method = \"GET\"><p>" + " " + str(row[1]) + "  /  " + str(row[2]) + "₪    @ " + str(row[3]) + " <input type='submit' class='btn btn-success' value='הסרה'> </p><input type='hidden' name='id' value=" + str(row[0]) + "></input></form>"
 
     return result
 
@@ -82,7 +76,7 @@ def hard_remove():
 @app.route("/soft_delete/", methods=["GET", "POST"])
 def soft_delete():
 
-    update_query = "UPDATE `" + db_table_name + "` SET `deleted` = 1 WHERE `idclient_test` = " + request.args.get('id') + ";"
+    update_query = "UPDATE `" + db_table_name + "` SET `deleted` = 1 WHERE `idexpenses` = " + request.args.get('id') + ";"
     deb_execute_query(db, update_query, True)
 
     return redirect("/web2", code=302)
