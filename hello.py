@@ -6,10 +6,12 @@ app = Flask(__name__)
 
 app_language = "Hebrew" # "English"
 
-db = MySQLdb.connect(host="localhost",  # your host
-                     user="root",  # username
+db = MySQLdb.connect(host="yanoom.mysql.pythonanywhere-services.com",  # your host
+                     user="yanoom",  # username
                      passwd="mySqlDb6",  # password
-                     db="import_schema")  # name of the database
+                     db="yanoom$affluence",  # name of the database
+                     charset="utf8",    # Essential to display hebrew
+                     use_unicode=True)  # Essential to display hebrew
 
 def deb_execute_query(db, query, commit = False):
     # Create a Cursor object to execute queries.
@@ -95,5 +97,5 @@ def index2():
     else:
         return render_template("en/your_base.html", db_expenses=Markup(show()))
 
-if __name__ == "__main__":
-    app.run()
+#if __name__ == "__main__":
+#    app.run()
