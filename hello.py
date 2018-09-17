@@ -34,19 +34,32 @@ def deb_execute_query(db, query, commit = False):
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?"
+
+def translate_payment_method(id):
+    if(1 == id):
+        return "מזומן"
+    if(2 == id):
+        return "אשראי"
+    return str(id)
 
 @app.route("/show/", methods=["GET", "POST"])
 def show():
     result = ""
 
     # Select data from table using SQL query.
-    select_query = "SELECT idexpenses, name, amount, paid, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT idexpenses, name, amount, paid, category FROM `" + db_table_name + "` WHERE deleted = 0;"
+    select_query = "SELECT idexpenses, name, amount, paid, payment_method, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT idexpenses, name, amount, paid, payment_method, category FROM `" + db_table_name + "` WHERE deleted = 0;"
     cur = deb_execute_query(db, select_query)
 
     # print the first and second columns
     for row in cur.fetchall():
-        result += "<form action=\"/soft_delete/\" method = \"GET\"><p>" + " " + str(row[1]) + "  /  " + str(row[2]) + "₪    @ " + str(row[3]) + " <input type='submit' class='btn btn-success' value='הסרה'> </p><input type='hidden' name='id' value=" + str(row[0]) + "></input></form>"
+        result +=   "<div class=\"row\">" + \
+                    "<div class=\"col-sm-2\">" + str(row[1]) + "</div>" \
+                    "<div class=\"col-sm-2\">" + str(row[2]) + "₪</div>" \
+                    "<div class=\"col-sm-2\">" + translate_payment_method(row[4]) + "</div>" \
+                    "<div class=\"col-sm-2\">" + str(row[3]) + "</div>" \
+                    "<div class=\"col-sm-2\"><input type='submit' class='btn btn-success' value='הסרה'></div><form action=\"/soft_delete/\" method = \"GET\"><input type='hidden' name='id' value=" + \
+                  str(row[0]) + "></input></form></div>"
 
     return result
 
