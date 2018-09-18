@@ -126,15 +126,22 @@ def index2():
 
 def db_select_payment_methods():
     pm_str = "<select class=\"form-control\" id=\"payment_select\" name=\"payment_method\">"
-    pm_str += "<option>1123</option>"
-    pm_str += "<option>HI  =)  </option>"
+    pm_str += "<option>מזומן</option>"
+    pm_str += "<option>אשראי</option>"
+    pm_str += "</select>"
+    return pm_str
+
+def db_select_categories():
+    pm_str = "<select class=\"form-control\" id=\"category_select\" name=\"category\">"
+    pm_str += "<option>כיף ותחביבים</option>"
+    pm_str += "<option>קורסים וסדנאות</option>"
     pm_str += "</select>"
     return pm_str
 
 @app.route("/web2")
 def index():
     if ("Hebrew" == app_language):
-        return render_template("he/your_base.html", db_expenses=Markup(show()), db_sum=Markup(sum()), db_payment_methods=Markup(db_select_payment_methods()))
+        return render_template("he/your_base.html", db_expenses=Markup(show()), db_sum=Markup(sum()), db_payment_methods=Markup(db_select_payment_methods()), db_categories=Markup(db_select_categories()))
     else:
         return render_template("en/your_base.html", db_expenses=Markup(show()))
 
