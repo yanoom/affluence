@@ -4,18 +4,43 @@
 from flask import Flask, request, render_template, Markup, redirect
 # from hashlib import sha256
 import MySQLdb
+from enum import Enum
+import sys
 
 app = Flask(__name__)
 
-app_language = "Hebrew" # "English"
+class Location(Enum):
+    local = 1
+    pythonanywhere = 2
 
-db = MySQLdb.connect(   host="localhost",       # your host
-                        user="root",            # username
-                        passwd="mySqlDb6",      # password
-                        db="import_schema",     # name of the database
-                        charset="utf8")         # Show Hebrew correctly!!
+class Language(Enum):
+    English = 1
+    Hebrew = 2
+
+
+app_location = Location.local
+app_language = Language.Hebrew
+
 db_table_name = "expenses";
 settings_table_name = "settings";
+
+if (Location.local == app_location):
+    db = MySQLdb.connect(host="localhost",                                  # your host
+                         user="root",                                       # username
+                         passwd="mySqlDb6",                                 # password
+                         db="affluence_schema",                             # name of the database
+                         charset="utf8",                                    # Essential to display hebrew
+                         use_unicode=True)                                  # Essential to display hebrew
+elif (Location.pythonanywhere == app_location):
+    db = MySQLdb.connect(host="yanoom.mysql.pythonanywhere-services.com",   # your host
+                         user="yanoom",                                     # username
+                         passwd="mySqlDb6",                                 # password
+                         db="yanoom$affluence",                             # name of the database
+                         charset="utf8",                                    # Essential to display hebrew
+                         use_unicode=True)                                  # Essential to display hebrew
+else:
+    print("Error: No app location specified, system halt!")
+    sys.exit()
 
 def deb_execute_query(db, query, commit = False):
     # Create a Cursor object to execute queries.
@@ -140,7 +165,7 @@ def db_select_categories():
 
 @app.route("/web2")
 def index():
-    if ("Hebrew" == app_language):
+    if (Language.Hebrew == app_language):
         return render_template("he/your_base.html", db_expenses=Markup(show()), db_sum=Markup(sum()), db_payment_methods=Markup(db_select_payment_methods()), db_categories=Markup(db_select_categories()))
     else:
         return render_template("en/your_base.html", db_expenses=Markup(show()))
