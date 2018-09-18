@@ -32,13 +32,20 @@
 
     <div class="container-fluid">
         <h1><img src="/static/media/beta-banner.png" alt="Smiley face" width="42" height="42">Affluence v0.1</h1>
-        <div class="row">
-            <form action="/add/" method="GET">
-                <textarea id="ta_desc" name="desc" placeholder="תיאור" data-limit-rows="true" cols="50" rows="2"></textarea>
-                <input id="tb_quant" name="quantity" placeholder="סכום">
-                <input type="submit" class="btn btn-success" value="שמירה">
+            <form class="form-inline" action="/add/" method="GET">
+                <div class="form-group">
+                    <textarea id="ta_desc" name="desc" placeholder="תיאור" data-limit-rows="true" cols="50" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <input id="tb_quant" name="quantity" placeholder="סכום">
+                </div>
+                <div class="form-group">
+                    {{ db_payment_methods }}
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="שמירה">
+                </div>
             </form>
-        </div>
         <hr/>
         <h2>העברות שפע מתחילת החודש:</h2>
         {{ db_expenses }}
