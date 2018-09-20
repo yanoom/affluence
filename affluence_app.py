@@ -12,13 +12,22 @@ app = Flask(__name__)
 class Location(Enum):
     local = 1
     pythonanywhere = 2
+    unknown = 3
+
 
 class Language(Enum):
     English = 1
     Hebrew = 2
 
 
-app_location = Location.pythonanywhere
+def determine_location():
+    if (50725104 == sys.hexversion):
+        return Location.pythonanywhere
+    if (50726640 == sys.hexversion):
+        return Location.local
+    return Location.unknown
+
+app_location = determine_location()
 app_language = Language.Hebrew
 
 db_table_name = "expenses";
@@ -59,7 +68,7 @@ def deb_execute_query(db, query, commit = False):
 
 @app.route("/")
 def hello():
-    return "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?"
+    return "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
 
 def translate_payment_method(id):
     if(1 == id):
