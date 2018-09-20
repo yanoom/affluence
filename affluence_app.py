@@ -18,7 +18,7 @@ class Language(Enum):
     Hebrew = 2
 
 
-app_location = Location.local
+app_location = Location.pythonanywhere
 app_language = Language.Hebrew
 
 db_table_name = "expenses";
