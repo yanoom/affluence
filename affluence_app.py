@@ -78,14 +78,13 @@ def show():
 
     # print the first and second columns
     for row in cur.fetchall():
-        result +=   "<div class=\"row\">" + \
+        result += "<div class=\"row\">" + \
                     "<div class=\"col-sm-2\">" + str(row[1]) + "</div>" \
                     "<div class=\"col-sm-2\">" + str(row[2]) + "₪</div>" \
                     "<div class=\"col-sm-2\">" + translate_payment_method(row[4]) + "</div>" \
                     "<div class=\"col-sm-2\">" + str(row[3]) + "</div>" \
-                    "<div class=\"col-sm-2\"><input type='submit' class='btn btn-success' value='הסרה'></div><form action=\"/soft_delete/\" method = \"GET\"><input type='hidden' name='id' value=" + \
-                  str(row[0]) + "></input></form></div>"
-
+                    "<div class=\"col-sm-2\"><form action=\"/soft_delete/\" method = \"GET\"><input type='submit' class='btn btn-success' value='הסרה'><input type='hidden' name='id' value=" + str(row[0]) + "></input></form></div>" \
+                  "</div>"
     return result
 
 @app.route("/add/", methods=["GET", "POST"])
