@@ -68,7 +68,15 @@ def deb_execute_query(db, query, commit = False):
 @app.route("/")
 def hello():
     res = "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
+    res += "</br> current year = " + db_select_current_year()
     return res
+
+def db_select_current_year():
+    # Select data from table using SQL query.
+    select_query = "SELECT YEAR(now());"
+    cur = deb_execute_query(db, select_query)
+
+    return str(cur.fetchone()).replace("(", "").replace(")", "").replace(",", "")   # fetchone returns a tuple (with parentheses and commas, remove then
 
 @app.route("/show/", methods=["GET", "POST"])
 def show():
@@ -94,15 +102,19 @@ def show():
                         LEFT JOIN \
                         categories \
                         ON \
-                        expenses.category = categories.idcategories"
+                        expenses.category = categories.idcategories "
+    if request.args.get('month'):
+        select_query += "WHERE(paid between DATE_FORMAT(NOW(), '%Y-" + request.args.get('month') +"-01') AND (DATE_ADD(LAST_DAY('" + db_select_current_year() + "-" + request.args.get('month') + "-01'), INTERVAL 1 DAY)) )"
+    else:
+        select_query += "WHERE(paid between DATE_FORMAT(NOW(), '%Y-%m-01') AND NOW() )"
     if request.args.get('showall'):
         select_query += ";"
     else:
-        select_query += " WHERE deleted = 0;;"
+        select_query += " AND (deleted = 0);"
 
     cur = deb_execute_query(db, select_query)
 
-    # print the first and second columns
+    # print the selected columns
     for row in cur.fetchall():
         result += "<div class=\"row\">" + \
                     "<div class=\"col-sm-4\" data-toggle=\"tooltip\" title='" + str(row[8]) + "'>" + str(row[1]) + "</div>" \
@@ -155,7 +167,16 @@ def sum():
     result = ""
 
     # Select SUM query
-    sum_query = "SELECT SUM(amount) FROM `expenses` WHERE deleted = 0;"
+    sum_query = "SELECT SUM(amount) FROM `expenses` "
+    if request.args.get('month'):
+        sum_query += "WHERE(paid between DATE_FORMAT(NOW(), '%Y-" + request.args.get('month') +"-01') AND (DATE_ADD(LAST_DAY('" + db_select_current_year() + "-" + request.args.get('month') + "-01'), INTERVAL 1 DAY)) )"
+    else:
+        sum_query += "WHERE(paid between DATE_FORMAT(NOW(), '%Y-%m-01') AND NOW() )"
+    if request.args.get('showall'):
+        sum_query += ";"
+    else:
+        sum_query += " AND (deleted = 0);"
+
     cur = deb_execute_query(db, sum_query)
     # print the first column
     for row in cur.fetchall():

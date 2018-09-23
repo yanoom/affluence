@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dcdcac67-3d82-4018-a546-cd8bb5e309a0" name="Default" comment="Now showing desired monthly budget + percentage.&#10;Added MySQL DB dump as backup to git.">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/affluence_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/affluence_app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -105,7 +103,7 @@
           <entry key="css" value="79" />
           <entry key="dummy" value="9" />
           <entry key="html" value="478" />
-          <entry key="py" value="2892" />
+          <entry key="py" value="3177" />
           <entry key="txt" value="163" />
         </counts>
       </usages-collector>
@@ -114,7 +112,7 @@
           <entry key="CSS" value="79" />
           <entry key="HTML" value="478" />
           <entry key="PLAIN_TEXT" value="172" />
-          <entry key="Python" value="2892" />
+          <entry key="Python" value="3177" />
         </counts>
       </usages-collector>
     </session>
@@ -124,10 +122,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/affluence_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+            <state relative-caret-position="51">
+              <caret line="173" column="20" lean-forward="true" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="20" />
               <folding>
-                <marker date="1537741887297" expanded="true" signature="299:332" ph="..." />
+                <marker date="1537746090233" expanded="true" signature="299:332" ph="..." />
+                <marker date="1537746090233" expanded="true" signature="2742:3031" ph="..." />
               </folding>
             </state>
           </provider>
@@ -146,10 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add</find>
-      <find>char</find>
-      <find>valid</find>
-      <find>show()</find>
       <find>show</find>
       <find>Markup</find>
       <find>redirect</find>
@@ -176,6 +171,10 @@
       <find>Expenses</find>
       <find>db_table_name</find>
       <find>settings_table_name</find>
+      <find>request.args.get</find>
+      <find>print the</find>
+      <find>SUM</find>
+      <find>sum()</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -199,8 +198,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-196" />
-    <option name="y" value="79" />
+    <option name="x" value="-373" />
+    <option name="y" value="80" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
   </component>
@@ -401,7 +400,7 @@
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>117</line>
+          <line>129</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
@@ -524,10 +523,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/affluence_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+        <state relative-caret-position="51">
+          <caret line="173" column="20" lean-forward="true" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="20" />
           <folding>
-            <marker date="1537741887297" expanded="true" signature="299:332" ph="..." />
+            <marker date="1537746090233" expanded="true" signature="299:332" ph="..." />
+            <marker date="1537746090233" expanded="true" signature="2742:3031" ph="..." />
           </folding>
         </state>
       </provider>
