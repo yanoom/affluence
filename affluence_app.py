@@ -75,17 +75,37 @@ def show():
     result = ""
 
     # Select data from table using SQL query.
+    select_query = "SELECT \
+                        expenses.idexpenses,\
+                        expenses.name,\
+                        expenses.amount,\
+                        expenses.paid,\
+                        expenses.payment_method,\
+                        expenses.category,\
+                        payment_methods.name,\
+                        categories.idcategories,\
+                        categories.name\
+                    FROM \
+                        expenses \
+                        LEFT JOIN \
+                        payment_methods \
+                        ON \
+                        expenses.payment_method = payment_methods.idpayment_methods \
+                        LEFT JOIN \
+                        categories \
+                        ON \
+                        expenses.category = categories.idcategories"
     if request.args.get('showall'):
-        select_query = "SELECT expenses.idexpenses, expenses.name, expenses.amount, expenses.paid, expenses.payment_method, expenses.category, payment_methods.name FROM expenses LEFT JOIN payment_methods ON expenses.payment_method = payment_methods.idpayment_methods;"
+        select_query += ";"
     else:
-        select_query = "SELECT expenses.idexpenses, expenses.name, expenses.amount, expenses.paid, expenses.payment_method, expenses.category, payment_methods.name FROM expenses LEFT JOIN payment_methods ON expenses.payment_method = payment_methods.idpayment_methods WHERE deleted = 0;"
+        select_query += " WHERE deleted = 0;;"
 
     cur = deb_execute_query(db, select_query)
 
     # print the first and second columns
     for row in cur.fetchall():
         result += "<div class=\"row\">" + \
-                    "<div class=\"col-sm-2\">" + str(row[1]) + "</div>" \
+                    "<div class=\"col-sm-4\" data-toggle=\"tooltip\" title='" + str(row[8]) + "'>" + str(row[1]) + "</div>" \
                     "<div class=\"col-sm-2\">" + str(row[2]) + "₪</div>" \
                     "<div class=\"col-sm-2\">" + str(row[6]) + "</div>" \
                     "<div class=\"col-sm-2\">" + str(row[3]) + "</div>" \
