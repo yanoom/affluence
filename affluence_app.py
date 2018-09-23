@@ -73,19 +73,16 @@ def hello():
     res = "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
     return res
 
-def translate_payment_method(id):
-    if(1 == id):
-        return "מזומן"
-    if(2 == id):
-        return "אשראי"
-    return str(id)
-
 @app.route("/show/", methods=["GET", "POST"])
 def show():
     result = ""
 
     # Select data from table using SQL query.
-    select_query = "SELECT idexpenses, name, amount, paid, payment_method, category FROM  `" + db_table_name + "` ;" if request.args.get('showall') else "SELECT idexpenses, name, amount, paid, payment_method, category FROM `" + db_table_name + "` WHERE deleted = 0;"
+    if request.args.get('showall'):
+        select_query = "SELECT expenses.idexpenses, expenses.name, expenses.amount, expenses.paid, expenses.payment_method, expenses.category, payment_methods.name FROM expenses LEFT JOIN payment_methods ON expenses.payment_method = payment_methods.idpayment_methods;"
+    else:
+        select_query = "SELECT expenses.idexpenses, expenses.name, expenses.amount, expenses.paid, expenses.payment_method, expenses.category, payment_methods.name FROM expenses LEFT JOIN payment_methods ON expenses.payment_method = payment_methods.idpayment_methods WHERE deleted = 0;"
+
     cur = deb_execute_query(db, select_query)
 
     # print the first and second columns
@@ -93,7 +90,7 @@ def show():
         result += "<div class=\"row\">" + \
                     "<div class=\"col-sm-2\">" + str(row[1]) + "</div>" \
                     "<div class=\"col-sm-2\">" + str(row[2]) + "₪</div>" \
-                    "<div class=\"col-sm-2\">" + translate_payment_method(row[4]) + "</div>" \
+                    "<div class=\"col-sm-2\">" + str(row[6]) + "</div>" \
                     "<div class=\"col-sm-2\">" + str(row[3]) + "</div>" \
                     "<div class=\"col-sm-2\"><form action=\"/soft_delete/\" method = \"GET\"><input type='submit' class='btn btn-success' value='הסרה'><input type='hidden' name='id' value=" + str(row[0]) + "></input></form></div>" \
                   "</div>"

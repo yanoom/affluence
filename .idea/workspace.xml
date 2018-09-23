@@ -103,7 +103,7 @@
           <entry key="css" value="79" />
           <entry key="dummy" value="9" />
           <entry key="html" value="478" />
-          <entry key="py" value="2632" />
+          <entry key="py" value="2771" />
           <entry key="txt" value="163" />
         </counts>
       </usages-collector>
@@ -112,7 +112,7 @@
           <entry key="CSS" value="79" />
           <entry key="HTML" value="478" />
           <entry key="PLAIN_TEXT" value="172" />
-          <entry key="Python" value="2632" />
+          <entry key="Python" value="2771" />
         </counts>
       </usages-collector>
     </session>
@@ -122,11 +122,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/affluence_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="115" selection-start-line="115" selection-end-line="115" />
+            <state relative-caret-position="153">
+              <caret line="99" column="78" selection-start-line="99" selection-start-column="78" selection-end-line="99" selection-end-column="78" />
               <folding>
                 <element signature="e#47#114#0" expanded="true" />
-                <marker date="1537734826852" expanded="true" signature="299:332" ph="..." />
+                <marker date="1537739700620" expanded="true" signature="299:332" ph="..." />
+                <marker date="1537739700620" expanded="true" signature="431:587" ph="..." />
               </folding>
             </state>
           </provider>
@@ -145,8 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>SELECT</find>
-      <find>client_test</find>
       <find>add</find>
       <find>char</find>
       <find>valid</find>
@@ -166,7 +165,6 @@
       <find>app_language</find>
       <find>deb_execute_query</find>
       <find>import</find>
-      <find>db_table_name</find>
       <find>web2</find>
       <find>sele</find>
       <find>paymen</find>
@@ -175,6 +173,9 @@
       <find>category</find>
       <find>/add</find>
       <find>category_id</find>
+      <find>db_table_name</find>
+      <find>settings_table_name</find>
+      <find>Expenses</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,8 +199,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-76" />
-    <option name="y" value="6" />
+    <option name="x" value="-172" />
+    <option name="y" value="78" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
   </component>
@@ -360,15 +361,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-172" y="78" width="1346" height="688" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.238653" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24511278" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32911393" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3322785" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36458334" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49925596" weight="0.403481" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -395,17 +395,12 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>80</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>61</line>
+          <line>69</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>103</line>
+          <line>108</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
@@ -528,11 +523,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/affluence_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="115" selection-start-line="115" selection-end-line="115" />
+        <state relative-caret-position="153">
+          <caret line="99" column="78" selection-start-line="99" selection-start-column="78" selection-end-line="99" selection-end-column="78" />
           <folding>
             <element signature="e#47#114#0" expanded="true" />
-            <marker date="1537734826852" expanded="true" signature="299:332" ph="..." />
+            <marker date="1537739700620" expanded="true" signature="299:332" ph="..." />
+            <marker date="1537739700620" expanded="true" signature="431:587" ph="..." />
           </folding>
         </state>
       </provider>
