@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#TODO: Add user selection interface (/default user setting?)
+
 from flask import Flask, request, render_template, Markup, redirect
 # from hashlib import sha256
 import MySQLdb
@@ -68,7 +70,8 @@ def deb_execute_query(db, query, commit = False):
 
 @app.route("/")
 def hello():
-    return "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
+    res = "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
+    return res
 
 def translate_payment_method(id):
     if(1 == id):
@@ -101,11 +104,16 @@ def add():
     #Input validation
     num_to_add = request.args.get('quantity')
     description_to_add = request.args.get('desc')
-    if (not num_to_add.isnumeric()):
+    payment_method_id = request.args.get('payment_method')
+    category_id = request.args.get('category')
+    if (not num_to_add.isnumeric()
+        or not payment_method_id.isnumeric()
+            or not category_id.isnumeric()):
         return
 
     user_id = '1';
-    insert_query = "INSERT INTO `" + db_table_name + "` (`user`, `name`, `amount`, `paid`, `last_updated`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW());"
+    #INSERT INTO `affluence_schema`.`expenses` (`name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`, `notes`, `deleted`) VALUES ('סנפלינג כיפי', '150', NOW(), NOW(), '4', '3', NULL, '0');
+    insert_query = "INSERT INTO `" + db_table_name + "` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
 
     deb_execute_query(db, insert_query, True)
 
@@ -158,18 +166,24 @@ def index2():
     return render_template("add_form.html")
 
 def db_select_payment_methods():
-    pm_str = "<select class=\"form-control\" id=\"payment_select\" name=\"payment_method\">"
-    pm_str += "<option>מזומן</option>"
-    pm_str += "<option>אשראי</option>"
-    pm_str += "</select>"
-    return pm_str
+    pm_query = "SELECT idpayment_methods, name FROM `payment_methods`"
+    cur = deb_execute_query(db, pm_query)
+
+    res = "<select class=\"form-control\" id=\"payment_method\" name=\"payment_method\">"
+    for row in cur.fetchall():
+        res += "<option value='" + str(row[0]) + "'>" + str(row[1]) + "</option>"
+    res += "</select>"
+    return res
 
 def db_select_categories():
-    pm_str = "<select class=\"form-control\" id=\"category_select\" name=\"category\">"
-    pm_str += "<option>כיף ותחביבים</option>"
-    pm_str += "<option>קורסים וסדנאות</option>"
-    pm_str += "</select>"
-    return pm_str
+    cat_query = "SELECT idcategories, name FROM `categories`"
+    cur = deb_execute_query(db, cat_query)
+
+    res = "<select class=\"form-control\" id=\"category\" name=\"category\">"
+    for row in cur.fetchall():
+        res += "<option value='" + str(row[0]) + "'>" + str(row[1]) + "</option>"
+    res += "</select>"
+    return res
 
 @app.route("/web2")
 def index():
