@@ -32,9 +32,6 @@ def determine_location():
 app_location = determine_location()
 app_language = Language.Hebrew
 
-db_table_name = "expenses";
-settings_table_name = "settings";
-
 if (Location.local == app_location):
     db = MySQLdb.connect(host="localhost",                                  # your host
                          user="root",                                       # username
@@ -110,7 +107,7 @@ def add():
 
     user_id = '1';
     #INSERT INTO `affluence_schema`.`expenses` (`name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`, `notes`, `deleted`) VALUES ('סנפלינג כיפי', '150', NOW(), NOW(), '4', '3', NULL, '0');
-    insert_query = "INSERT INTO `" + db_table_name + "` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
+    insert_query = "INSERT INTO `expenses` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
 
     deb_execute_query(db, insert_query, True)
 
@@ -120,7 +117,7 @@ def add():
 @app.route("/hard_remove/", methods=["GET", "POST"])
 def hard_remove():
 
-    delete_query = "DELETE FROM `" + db_table_name + "` WHERE `idclient_test` = " + request.args.get('id') + ";"
+    delete_query = "DELETE FROM `expenses` WHERE `idclient_test` = " + request.args.get('id') + ";"
     deb_execute_query(db, delete_query, True)
 
     return show()
@@ -128,7 +125,7 @@ def hard_remove():
 @app.route("/soft_delete/", methods=["GET", "POST"])
 def soft_delete():
 
-    update_query = "UPDATE `" + db_table_name + "` SET `deleted` = 1 WHERE `idexpenses` = " + request.args.get('id') + ";"
+    update_query = "UPDATE `expenses` SET `deleted` = 1 WHERE `idexpenses` = " + request.args.get('id') + ";"
     deb_execute_query(db, update_query, True)
 
     return redirect("/web2", code=302)
@@ -138,7 +135,7 @@ def sum():
     result = ""
 
     # Select SUM query
-    sum_query = "SELECT SUM(amount) FROM `" + db_table_name + "` WHERE deleted = 0;"
+    sum_query = "SELECT SUM(amount) FROM `expenses` WHERE deleted = 0;"
     cur = deb_execute_query(db, sum_query)
     # print the first column
     for row in cur.fetchall():
@@ -146,7 +143,7 @@ def sum():
         sum_this_month = row[0]
 
     # Select monthly_budget query
-    monbudg_query = "SELECT valuesettings FROM `" + settings_table_name + "` WHERE `namesettings` = 'monthly_budget'";
+    monbudg_query = "SELECT valuesettings FROM `settings` WHERE `namesettings` = 'monthly_budget'";
     cur = deb_execute_query(db, monbudg_query)
     # print the first column
     for row in cur.fetchall():
