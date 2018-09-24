@@ -50,7 +50,15 @@
                 </div>
             </form>
         <hr/>
-        <h2>העברות שפע מתחילת החודש:</h2>
+        <div class="row">
+            <div class="col-sm-4"><h2>העברות שפע מתחילת החודש:</h2></div>
+            <div class="offset-sm-6 col-sm-2">
+                <form action="web2" method="GET">
+                  <select class="form-control" id="month_select" name="month" onchange="this.form.submit()"><option value="">חודש<option value="01">ינואר</option><option value="02">פברואר</option><option value="03">מרץ</option><option value="04">אפריל</option><option value="05">מאי</option><option value="06">יוני</option><option value="07">יולי</option><option value="08">אוגוסט</option><option value="09">ספטמבר</option><option value="10">אוקטובר</option><option value="11">נובמבר</option><option value="12">דצמבר</option></select>
+                </form>
+            </div>
+        </div>
+        
         {{ db_expenses }}
         <span>
             <strong>
