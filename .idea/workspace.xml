@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dcdcac67-3d82-4018-a546-cd8bb5e309a0" name="Default" comment="Now showing desired monthly budget + percentage.&#10;Added MySQL DB dump as backup to git.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/affluence_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/affluence_app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/he/your_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/he/your_base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,12 +78,14 @@
     <session id="181554311">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -102,40 +106,41 @@
         <counts>
           <entry key="css" value="79" />
           <entry key="dummy" value="9" />
-          <entry key="html" value="500" />
-          <entry key="py" value="3177" />
+          <entry key="html" value="552" />
+          <entry key="py" value="3378" />
           <entry key="txt" value="163" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="79" />
-          <entry key="HTML" value="500" />
+          <entry key="HTML" value="552" />
           <entry key="PLAIN_TEXT" value="172" />
-          <entry key="Python" value="3177" />
+          <entry key="Python" value="3378" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/affluence_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="17">
+              <caret line="75" selection-start-line="75" selection-end-line="75" />
               <folding>
-                <marker date="1537746090233" expanded="true" signature="299:332" ph="..." />
-                <marker date="1537746090233" expanded="true" signature="2742:3031" ph="..." />
+                <marker date="1537857324145" expanded="true" signature="299:332" ph="..." />
+                <marker date="1537857324145" expanded="true" signature="2754:3042" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/he/your_base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="54" column="12" lean-forward="true" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
+            <state relative-caret-position="107">
+              <caret line="39" column="175" selection-start-line="39" selection-start-column="175" selection-end-line="39" selection-end-column="175" />
             </state>
           </provider>
         </entry>
@@ -144,8 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>show</find>
-      <find>Markup</find>
       <find>redirect</find>
       <find>&lt;p&gt;</find>
       <find>soft</find>
@@ -159,7 +162,6 @@
       <find>app_language</find>
       <find>deb_execute_query</find>
       <find>import</find>
-      <find>web2</find>
       <find>sele</find>
       <find>paymen</find>
       <find>payment_se</find>
@@ -174,6 +176,9 @@
       <find>print the</find>
       <find>SUM</find>
       <find>sum()</find>
+      <find>web2</find>
+      <find>user</find>
+      <find>user_id</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -191,14 +196,14 @@
         <option value="$PROJECT_DIR$/static/he/style.css" />
         <option value="$PROJECT_DIR$/hello.py" />
         <option value="$PROJECT_DIR$/affluence.py" />
-        <option value="$PROJECT_DIR$/affluence_app.py" />
         <option value="$PROJECT_DIR$/templates/he/your_base.html" />
+        <option value="$PROJECT_DIR$/affluence_app.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-373" />
-    <option name="y" value="80" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-4" />
+    <option name="y" value="18" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
   </component>
@@ -230,17 +235,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
-          <expand>
-            <path>
-              <item name="affluence" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -275,6 +269,17 @@
               <item name="affluence" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="he" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
+          <expand>
+            <path>
+              <item name="affluence" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -359,15 +364,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-4" y="18" width="1346" height="688" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.238653" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24511278" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32911393" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3322785" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36458334" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49925596" weight="0.403481" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -394,12 +399,12 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>58</line>
+          <line>59</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>129</line>
+          <line>130</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
@@ -513,20 +518,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/affluence_app.py">
+    <entry file="file://$PROJECT_DIR$/templates/he/your_base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <marker date="1537746090233" expanded="true" signature="299:332" ph="..." />
-            <marker date="1537746090233" expanded="true" signature="2742:3031" ph="..." />
-          </folding>
+        <state relative-caret-position="107">
+          <caret line="39" column="175" selection-start-line="39" selection-start-column="175" selection-end-line="39" selection-end-column="175" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/he/your_base.html">
+    <entry file="file://$PROJECT_DIR$/affluence_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="54" column="12" lean-forward="true" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
+        <state relative-caret-position="17">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
+          <folding>
+            <marker date="1537857324145" expanded="true" signature="299:332" ph="..." />
+            <marker date="1537857324145" expanded="true" signature="2754:3042" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -31,6 +31,7 @@ def determine_location():
 
 app_location = determine_location()
 app_language = Language.Hebrew
+user_id = ""
 
 if (Location.local == app_location):
     db = MySQLdb.connect(host="localhost",                                  # your host
@@ -50,7 +51,7 @@ else:
     print("Error: No app location specified, system halt!")
     sys.exit()
 
-def deb_execute_query(db, query, commit = False):
+def db_execute_query(db, query, commit = False):
     # Create a Cursor object to execute queries.
     cur = db.cursor()
 
@@ -74,7 +75,7 @@ def hello():
 def db_select_current_year():
     # Select data from table using SQL query.
     select_query = "SELECT YEAR(now());"
-    cur = deb_execute_query(db, select_query)
+    cur = db_execute_query(db, select_query)
 
     return str(cur.fetchone()).replace("(", "").replace(")", "").replace(",", "")   # fetchone returns a tuple (with parentheses and commas, remove then
 
@@ -112,7 +113,7 @@ def show():
     else:
         select_query += " AND (deleted = 0);"
 
-    cur = deb_execute_query(db, select_query)
+    cur = db_execute_query(db, select_query)
 
     # print the selected columns
     for row in cur.fetchall():
@@ -137,11 +138,10 @@ def add():
             or not category_id.isnumeric()):
         return
 
-    user_id = '1';
     #INSERT INTO `affluence_schema`.`expenses` (`name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`, `notes`, `deleted`) VALUES ('סנפלינג כיפי', '150', NOW(), NOW(), '4', '3', NULL, '0');
     insert_query = "INSERT INTO `expenses` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
 
-    deb_execute_query(db, insert_query, True)
+    db_execute_query(db, insert_query, True)
 
     #return show()
     return redirect("/web2", code=302)
@@ -150,7 +150,7 @@ def add():
 def hard_remove():
 
     delete_query = "DELETE FROM `expenses` WHERE `idclient_test` = " + request.args.get('id') + ";"
-    deb_execute_query(db, delete_query, True)
+    db_execute_query(db, delete_query, True)
 
     return show()
 
@@ -158,7 +158,7 @@ def hard_remove():
 def soft_delete():
 
     update_query = "UPDATE `expenses` SET `deleted` = 1 WHERE `idexpenses` = " + request.args.get('id') + ";"
-    deb_execute_query(db, update_query, True)
+    db_execute_query(db, update_query, True)
 
     return redirect("/web2", code=302)
 
@@ -177,7 +177,7 @@ def sum():
     else:
         sum_query += " AND (deleted = 0);"
 
-    cur = deb_execute_query(db, sum_query)
+    cur = db_execute_query(db, sum_query)
     # print the first column
     for row in cur.fetchall():
         result += "<strong>" + str(row[0]) + "</strong><br />"
@@ -185,7 +185,7 @@ def sum():
 
     # Select monthly_budget query
     monbudg_query = "SELECT valuesettings FROM `settings` WHERE `namesettings` = 'monthly_budget'";
-    cur = deb_execute_query(db, monbudg_query)
+    cur = db_execute_query(db, monbudg_query)
     # print the first column
     for row in cur.fetchall():
         result += "<strong>העברת שפע רצויה: " + str(row[0]) + "</strong><br />"
@@ -202,9 +202,10 @@ def index2():
 
 def db_select_payment_methods():
     pm_query = "SELECT idpayment_methods, name FROM `payment_methods`"
-    cur = deb_execute_query(db, pm_query)
+    cur = db_execute_query(db, pm_query)
 
     res = "<select class=\"form-control\" id=\"payment_method\" name=\"payment_method\">"
+    res += "<option value='0' selected>אמצעי תשלום (ללא)</option>"
     for row in cur.fetchall():
         res += "<option value='" + str(row[0]) + "'>" + str(row[1]) + "</option>"
     res += "</select>"
@@ -212,9 +213,10 @@ def db_select_payment_methods():
 
 def db_select_categories():
     cat_query = "SELECT idcategories, name FROM `categories`"
-    cur = deb_execute_query(db, cat_query)
+    cur = db_execute_query(db, cat_query)
 
     res = "<select class=\"form-control\" id=\"category\" name=\"category\">"
+    res += "<option value='0' selected>קטגוריה (ללא)</option>"
     for row in cur.fetchall():
         res += "<option value='" + str(row[0]) + "'>" + str(row[1]) + "</option>"
     res += "</select>"
@@ -222,8 +224,23 @@ def db_select_categories():
 
 @app.route("/web2")
 def index():
+    global user_id
+    if (request.args.get('user')):
+        user_id = request.args.get('user')
+    else:
+        user_id = '2';
+
+    if (user_id == '1'):
+        user1_selected = "selected"
+    else:
+        user1_selected = ""
+    if (user_id == '2'):
+        user2_selected = "selected"
+    else:
+        user2_selected = ""
+
     if (Language.Hebrew == app_language):
-        return render_template("he/your_base.html", db_expenses=Markup(show()), db_sum=Markup(sum()), db_payment_methods=Markup(db_select_payment_methods()), db_categories=Markup(db_select_categories()))
+        return render_template("he/your_base.html", db_expenses=Markup(show()), db_sum=Markup(sum()), db_payment_methods=Markup(db_select_payment_methods()), db_categories=Markup(db_select_categories()), user1_selected=user1_selected, user2_selected=user2_selected)
     else:
         return render_template("en/your_base.html", db_expenses=Markup(show()))
 

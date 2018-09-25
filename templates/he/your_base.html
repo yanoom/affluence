@@ -31,7 +31,16 @@
     {% block content %}{% endblock content %}
 
     <div class="container-fluid">
-        <h1><img src="/static/media/beta-banner.png" alt="Smiley face" width="42" height="42">Affluence v0.1</h1>
+        <div class="row">
+            <div class="col-sm-4">
+                <h1><img src="/static/media/beta-banner.png" alt="Smiley face" width="42" height="42">Affluence v0.1</h1>
+            </div>
+            <div class="offset-sm-6 col-sm-1">
+                <form action="web2" method="GET">
+                  <select class="form-control" id="user_select" name="user" onchange="this.form.submit()"><option value="1" {{ user1_selected }}>בוטן<option value="2" {{ user2_selected }}>טופי</option></select>
+                </form>
+            </div>
+        </div>
             <form class="form-inline" action="/add/" method="GET">
                 <div class="form-group">
                     <textarea id="ta_desc" name="desc" placeholder="תיאור" data-limit-rows="true" cols="50" rows="2"></textarea>
@@ -58,7 +67,7 @@
                 </form>
             </div>
         </div>
-        
+
         {{ db_expenses }}
         <span>
             <strong>
