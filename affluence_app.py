@@ -205,9 +205,13 @@ def from_tg():
     msg_json = json.loads(msg)
 
     # send message to telegram api url
+<<<<<<< HEAD
     url = "https://api.telegram.org/<bot_id>/sendMessage?chat_id=315909554&text=Received message from TG!\n"
     url += "Only Text=" + requests.utils.quote(msg_json["message"]["text"], safe='') + "\n"
     url += "User=" + requests.utils.quote(msg_json["message"]["from"]["username"], safe='') + "\n"
+=======
+    url = "https://api.telegram.org/<bot_id>/sendMessage?chat_id=315909554&text=Received message from TG! "
+>>>>>>> 99a9ef90cc9fddd3cd624d5a47fe2aa1fb50f973
     url += "Full msg=" + requests.utils.quote(msg, safe='')
     res = requests.get(url).content
     return res
