@@ -201,13 +201,14 @@ def sum():
 @app.route("/from_tg", methods=["GET", "POST"])
 def from_tg():
     #Get full HTTP request data
-    msg = str(request.get_data())
-    #msg_json = json.loads(msg)
+    msg = request.get_data().decode("utf-8")
+    msg_json = json.loads(msg)
 
     # send message to telegram api url
-    url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text=Received message from TG! "
+    url = "https://api.telegram.org/<bot_id>/sendMessage?chat_id=315909554&text=Received message from TG!\n"
+    url += "Only Text=" + requests.utils.quote(msg_json["message"]["text"], safe='') + "\n"
+    url += "User=" + requests.utils.quote(msg_json["message"]["from"]["username"], safe='') + "\n"
     url += "Full msg=" + requests.utils.quote(msg, safe='')
-    #url += "Only Text=" + requests.utils.quote(msg_json["message"]["text"], safe='')
     res = requests.get(url).content
     return res
 
@@ -217,7 +218,7 @@ def send_to_tg():
     msg = request.args.get('msg')
 
     # send message to telegram api url
-    url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text="
+    url = "https://api.telegram.org/<bot_id>/sendMessage?chat_id=315909554&text="
     url += requests.utils.quote(msg, safe='')
     res = requests.get(url).content
     return res
