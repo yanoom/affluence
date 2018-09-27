@@ -105,7 +105,7 @@
           <entry key="css" value="79" />
           <entry key="dummy" value="9" />
           <entry key="html" value="552" />
-          <entry key="py" value="3711" />
+          <entry key="py" value="3752" />
           <entry key="txt" value="163" />
         </counts>
       </usages-collector>
@@ -114,7 +114,7 @@
           <entry key="CSS" value="79" />
           <entry key="HTML" value="552" />
           <entry key="PLAIN_TEXT" value="172" />
-          <entry key="Python" value="3711" />
+          <entry key="Python" value="3752" />
         </counts>
       </usages-collector>
     </session>
@@ -124,13 +124,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/affluence_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="212" column="6" lean-forward="true" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
+            <state relative-caret-position="221">
+              <caret line="209" column="44" selection-start-line="209" selection-start-column="44" selection-end-line="209" selection-end-column="44" />
               <folding>
                 <element signature="e#109#176#0" expanded="true" />
-                <marker date="1538028782092" expanded="true" signature="315:348" ph="..." />
-                <marker date="1538028782092" expanded="true" signature="2770:3058" ph="..." />
-                <marker date="1538028782092" expanded="true" signature="8201:8759" ph="..." />
+                <marker date="1538029568739" expanded="true" signature="327:360" ph="..." />
+                <marker date="1538029568739" expanded="true" signature="2782:3070" ph="..." />
+                <marker date="1538029568739" expanded="true" signature="8213:8656" ph="..." />
               </folding>
             </state>
           </provider>
@@ -177,8 +177,8 @@
       <find>user_id</find>
       <find>quote</find>
       <find>to_tg</find>
-      <find>from_</find>
       <find>send message to telegram</find>
+      <find>from_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -399,12 +399,12 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>60</line>
+          <line>61</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>131</line>
+          <line>132</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
@@ -527,13 +527,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/affluence_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="212" column="6" lean-forward="true" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
+        <state relative-caret-position="221">
+          <caret line="209" column="44" selection-start-line="209" selection-start-column="44" selection-end-line="209" selection-end-column="44" />
           <folding>
             <element signature="e#109#176#0" expanded="true" />
-            <marker date="1538028782092" expanded="true" signature="315:348" ph="..." />
-            <marker date="1538028782092" expanded="true" signature="2770:3058" ph="..." />
-            <marker date="1538028782092" expanded="true" signature="8201:8759" ph="..." />
+            <marker date="1538029568739" expanded="true" signature="327:360" ph="..." />
+            <marker date="1538029568739" expanded="true" signature="2782:3070" ph="..." />
+            <marker date="1538029568739" expanded="true" signature="8213:8656" ph="..." />
           </folding>
         </state>
       </provider>
