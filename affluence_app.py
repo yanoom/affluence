@@ -8,6 +8,7 @@ from flask import Flask, request, render_template, Markup, redirect
 import MySQLdb
 from enum import Enum
 import sys
+import requests
 
 app = Flask(__name__)
 
@@ -195,6 +196,33 @@ def sum():
     result += "<strong>אחוז מהרצוי: " + str(round(((sum_this_month / monthly_budget)*100), 2)) + "%</strong>"
 
     return result
+
+@app.route("/from_tg", methods=["GET", "POST"])
+def from_tg():
+    ## Send GET request with params reference:
+    # payload = (('key1', 'value1'), ('key2', 'value2'))
+    # r = requests.get("http://httpbin.org/get", params=payload)
+
+    #Get full HTTP request data
+    msg = str(request.get_data())
+    print("From Telegram = " + msg)
+
+    # send message to telegram api url
+    url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text=Receied message from TG! "
+    url += requests.utils.quote(msg, safe='')
+    res = requests.get(url).content
+    return res
+
+@app.route("/send_to_tg", methods=["GET"])
+def send_to_tg():
+    # msg should be accepted as GET parameter
+    msg = request.args.get('msg')
+
+    # send message to telegram api url
+    url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text="
+    url += requests.utils.quote(msg, safe='')
+    res = requests.get(url).content
+    return res
 
 @app.route("/web")
 def index2():

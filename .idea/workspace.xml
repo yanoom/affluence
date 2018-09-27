@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dcdcac67-3d82-4018-a546-cd8bb5e309a0" name="Default" comment="Now showing desired monthly budget + percentage.&#10;Added MySQL DB dump as backup to git.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/affluence_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/affluence_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/he/your_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/he/your_base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +105,7 @@
           <entry key="css" value="79" />
           <entry key="dummy" value="9" />
           <entry key="html" value="552" />
-          <entry key="py" value="3378" />
+          <entry key="py" value="3711" />
           <entry key="txt" value="163" />
         </counts>
       </usages-collector>
@@ -116,7 +114,7 @@
           <entry key="CSS" value="79" />
           <entry key="HTML" value="552" />
           <entry key="PLAIN_TEXT" value="172" />
-          <entry key="Python" value="3378" />
+          <entry key="Python" value="3711" />
         </counts>
       </usages-collector>
     </session>
@@ -126,11 +124,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/affluence_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="75" selection-start-line="75" selection-end-line="75" />
+            <state relative-caret-position="255">
+              <caret line="212" column="6" lean-forward="true" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
               <folding>
-                <marker date="1537857324145" expanded="true" signature="299:332" ph="..." />
-                <marker date="1537857324145" expanded="true" signature="2754:3042" ph="..." />
+                <element signature="e#109#176#0" expanded="true" />
+                <marker date="1538028782092" expanded="true" signature="315:348" ph="..." />
+                <marker date="1538028782092" expanded="true" signature="2770:3058" ph="..." />
+                <marker date="1538028782092" expanded="true" signature="8201:8759" ph="..." />
               </folding>
             </state>
           </provider>
@@ -139,8 +139,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/he/your_base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="39" column="175" selection-start-line="39" selection-start-column="175" selection-end-line="39" selection-end-column="175" />
+            <state relative-caret-position="-340">
+              <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -149,10 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>redirect</find>
-      <find>&lt;p&gt;</find>
-      <find>soft</find>
-      <find>form</find>
       <find>&lt;div class=&quot;row&quot;&gt;</find>
       <find>db_expenses</find>
       <find>col</find>
@@ -179,6 +175,10 @@
       <find>web2</find>
       <find>user</find>
       <find>user_id</find>
+      <find>quote</find>
+      <find>to_tg</find>
+      <find>from_</find>
+      <find>send message to telegram</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -201,7 +201,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-4" />
     <option name="y" value="18" />
     <option name="width" value="1346" />
@@ -364,15 +364,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="18" width="1346" height="688" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24511278" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.238653" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32911393" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36458334" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3322785" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49925596" weight="0.403481" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -399,12 +399,12 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/affluence_app.py</url>
-          <line>130</line>
+          <line>131</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
@@ -520,18 +520,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/he/your_base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="39" column="175" selection-start-line="39" selection-start-column="175" selection-end-line="39" selection-end-column="175" />
+        <state relative-caret-position="-340">
+          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/affluence_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
+        <state relative-caret-position="255">
+          <caret line="212" column="6" lean-forward="true" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
           <folding>
-            <marker date="1537857324145" expanded="true" signature="299:332" ph="..." />
-            <marker date="1537857324145" expanded="true" signature="2754:3042" ph="..." />
+            <element signature="e#109#176#0" expanded="true" />
+            <marker date="1538028782092" expanded="true" signature="315:348" ph="..." />
+            <marker date="1538028782092" expanded="true" signature="2770:3058" ph="..." />
+            <marker date="1538028782092" expanded="true" signature="8201:8759" ph="..." />
           </folding>
         </state>
       </provider>
