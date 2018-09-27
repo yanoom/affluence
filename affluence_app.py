@@ -208,7 +208,6 @@ def from_tg():
     url = "https://api.telegram.org/<bot_id>/sendMessage?chat_id=315909554&text=Received message from TG!\n"
     url += "Only Text=" + requests.utils.quote(msg_json["message"]["text"], safe='') + "\n"
     url += "User=" + requests.utils.quote(msg_json["message"]["from"]["username"], safe='') + "\n"
-    url = "https://api.telegram.org/<bot_id>/sendMessage?chat_id=315909554&text=Received message from TG! "
     url += "Full msg=" + requests.utils.quote(msg, safe='')
     res = requests.get(url).content
     return res
