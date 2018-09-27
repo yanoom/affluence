@@ -202,12 +202,12 @@ def sum():
 def from_tg():
     #Get full HTTP request data
     msg = str(request.get_data())
-    msg_json = json.loads(msg)
+    #msg_json = json.loads(msg)
 
     # send message to telegram api url
     url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text=Received message from TG! "
-    url += "Only Text=" + requests.utils.quote(msg["message"]["text"], safe='')
     url += "Full msg=" + requests.utils.quote(msg, safe='')
+    #url += "Only Text=" + requests.utils.quote(msg_json["message"]["text"], safe='')
     res = requests.get(url).content
     return res
 
