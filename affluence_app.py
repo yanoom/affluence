@@ -10,6 +10,7 @@ from enum import Enum
 import sys
 import requests
 import json
+from affluence_bot_id_module import affluence_bot_id
 
 app = Flask(__name__)
 
@@ -205,9 +206,10 @@ def from_tg():
     msg_json = json.loads(msg)
 
     # send message to telegram api url
-    url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text=Received message from TG! "
-    url += "Only Text=" + requests.utils.quote(msg["message"]["text"], safe='')
-    url += "Full msg=" + requests.utils.quote(msg, safe='')
+    url = "https://api.telegram.org/" + affluence_bot_id + "/sendMessage?chat_id=315909554&text=Received message from TG! "
+    #url += "Full msg=" + requests.utils.quote(msg, safe='')
+    url += "Only Text=" + requests.utils.quote(msg["message"]["text"], safe='') + "\n"
+    url += "User=" + requests.utils.quote(msg["message"]["from"]["username"], safe='') + "\n"
     res = requests.get(url).content
     return res
 
@@ -217,7 +219,7 @@ def send_to_tg():
     msg = request.args.get('msg')
 
     # send message to telegram api url
-    url = "https://api.telegram.org/bot667127270:AAH2sIrrW6gFwO2uE8dspWv-Bny0h2_AkoU/sendMessage?chat_id=315909554&text="
+    url = "https://api.telegram.org/" + affluence_bot_id + "/sendMessage?chat_id=315909554&text="
     url += requests.utils.quote(msg, safe='')
     res = requests.get(url).content
     return res
