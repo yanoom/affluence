@@ -10,7 +10,7 @@ from enum import Enum
 import sys
 import requests
 import json
-from affluence_bot_id_module import affluence_bot_id
+from affluence_safe_module import affluence_bot_id, db_pass
 
 app = Flask(__name__)
 
@@ -39,14 +39,14 @@ user_id = ""
 if (Location.local == app_location):
     db = MySQLdb.connect(host="localhost",                                  # your host
                          user="root",                                       # username
-                         passwd="mySqlDb6",                                 # password
+                         passwd=db_pass,                                    # password
                          db="affluence_schema",                             # name of the database
                          charset="utf8",                                    # Essential to display hebrew
                          use_unicode=True)                                  # Essential to display hebrew
 elif (Location.pythonanywhere == app_location):
     db = MySQLdb.connect(host="yanoom.mysql.pythonanywhere-services.com",   # your host
                          user="yanoom",                                     # username
-                         passwd="mySqlDb6",                                 # password
+                         passwd=db_pass,                                    # password
                          db="yanoom$affluence",                             # name of the database
                          charset="utf8",                                    # Essential to display hebrew
                          use_unicode=True)                                  # Essential to display hebrew
