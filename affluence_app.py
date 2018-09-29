@@ -202,7 +202,7 @@ def sum():
 @app.route("/from_tg", methods=["GET", "POST"])
 def from_tg():
     #Get full HTTP request data
-    msg = str(request.get_data())
+    msg = request.get_data().decode("utf-8")
     msg_json = json.loads(msg)
 
     # send message to telegram api url
