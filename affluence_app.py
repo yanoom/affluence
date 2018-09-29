@@ -112,9 +112,9 @@ def show():
     else:
         select_query += "WHERE(paid between DATE_FORMAT(NOW(), '%Y-%m-01') AND NOW() )"
     if request.args.get('showall'):
-        select_query += ";"
+        select_query += " ORDER BY last_updated DESC;"
     else:
-        select_query += " AND (deleted = 0);"
+        select_query += " AND (deleted = 0) ORDER BY last_updated DESC;"
 
     cur = db_execute_query(db, select_query)
 
