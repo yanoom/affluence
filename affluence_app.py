@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#TODO: Add user selection interface (/default user setting?)
+# TODO: Add deletion confirmation
+# TODO: Add pie chart in the summary section: Total / expenses (divided to categories)
 
 from flask import Flask, request, render_template, Markup, redirect
 # from hashlib import sha256
