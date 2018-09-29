@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# TODO: Add deletion confirmation
+# TODO: Add insert interface from Telegram Bot (In progress)
+# TODO: Add deletion confirmation (referene: https://m.facebook.com/nataly.atik)
 # TODO: Add pie chart in the summary section: Total / expenses (divided to categories)
 
 from flask import Flask, request, render_template, Markup, redirect
@@ -64,10 +65,11 @@ def db_execute_query(db, query, commit = False):
         cur.execute(query)
         if (commit):
             db.commit()
-    except:
+    except MySQLdb.Error as e:
         if (commit):
             db.rollback()
-        return "Error occurred: " + query
+        print("Error occurred: " + str(e) + " ; query = " + query)
+        raise
     return cur
 
 @app.route("/")
@@ -80,6 +82,10 @@ def db_select_current_year():
     # Select data from table using SQL query.
     select_query = "SELECT YEAR(now());"
     cur = db_execute_query(db, select_query)
+
+    # Debug AttributeError: 'str' object has no attribute 'fetchall' issue
+    if isinstance(cur, str):
+        print ("isinstance(cur, str) - " + cur)
 
     return str(cur.fetchone()).replace("(", "").replace(")", "").replace(",", "")   # fetchone returns a tuple (with parentheses and commas, remove then
 
@@ -118,6 +124,11 @@ def show():
         select_query += " AND (deleted = 0) ORDER BY last_updated DESC;"
 
     cur = db_execute_query(db, select_query)
+
+    # Debug AttributeError: 'str' object has no attribute 'fetchall' issue
+    if isinstance(cur, str):
+        print ("isinstance(cur, str) - " + cur)
+
 
     # print the selected columns
     for row in cur.fetchall():
@@ -205,12 +216,32 @@ def from_tg():
     #Get full HTTP request data
     msg = request.get_data().decode("utf-8")
     msg_json = json.loads(msg)
+    msg_text = msg_json["message"]["text"]
 
     # send message to telegram api url
-    url = "https://api.telegram.org/" + affluence_bot_id + "/sendMessage?chat_id=315909554&text=Received message from TG! "
-    #url += "Full msg=" + requests.utils.quote(msg, safe='')
-    url += "Only Text=" + requests.utils.quote(msg["message"]["text"], safe='') + "\n"
-    url += "User=" + requests.utils.quote(msg["message"]["from"]["username"], safe='') + "\n"
+    url = "https://api.telegram.org/" + affluence_bot_id + "/sendMessage?chat_id=315909554&text=Received message from TG!\n"
+
+    if (("+" in msg_text) and ("+" == msg_text[0]) and ("|" in msg_text) ):
+        #url += "Full msg=" + requests.utils.quote(msg_json, safe='')
+        url += "Only Text=" + requests.utils.quote(msg_json["message"]["text"], safe='') + "\n"
+        url += "User=" + requests.utils.quote(msg_json["message"]["from"]["username"], safe='') + "\n"
+        expense_text_amount = msg_text.split("|", 2)
+        try:
+            if (isinstance(expense_text_amount[0], str) and isinstance(expense_text_amount[1], float)):
+                url += "expense_text = " + expense_text_amount[0]
+                url += "\nexpense_amount = " + expense_text_amount[1]
+            else:
+                url += "Failed to parse incoming message. Failed to convert to 'text | amount' format\n"
+                expense_text = expense_text_amount[0]
+                expense_amount = float(expense_text_amount[1])
+                url += "str(expense_text_amount[0]) = " + expense_text + "\nstr(expense_text_amount[1]) = " + str(expense_text_amount[1])
+                url += "\nisinstance(expense_text, str) = " + str(isinstance(expense_text, str)) + "\nisinstance(float(expense_amount, float)) = " + str(isinstance(expense_amount, float))
+        except TypeError as e:
+            url += "Failed to parse incoming message. TypeError:" + str(e)
+    else:
+        url += "Failed to parse incoming message. Check syntax! (did you forget to start with a '+' or seperate __text__ and __amount__ with '|' ?\n"
+        url += "Full msg=" + requests.utils.quote(request.get_data(), safe='')
+
     res = requests.get(url).content
     return res
 
