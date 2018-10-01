@@ -163,25 +163,35 @@ def isFloat(string):
     except ValueError:
         return False
 
+def db_add_expense(amount, description, payment_method_id="NULL", category_id="NULL"):
+    #Input validation
+    if (not "NULL" == payment_method_id and not (payment_method_id.isnumeric())) \
+            or (not "NULL" == category_id and not (category_id.isnumeric())) \
+            or (not isFloat(amount)):
+        return False
+
+    #INSERT INTO `affluence_schema`.`expenses` (`name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`, `notes`, `deleted`) VALUES ('סנפלינג כיפי', '150', NOW(), NOW(), '4', '3', NULL, '0');
+    insert_query = "INSERT INTO `expenses` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES ('" + user_id + "', '" + description + "', '" + amount + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
+
+    db_execute_query(insert_query, True)
+    return True
+
 @app.route("/add/", methods=["GET", "POST"])
 def add():
-    #Input validation
     num_to_add = request.args.get('quantity')
     description_to_add = request.args.get('desc')
     payment_method_id = request.args.get('payment_method')
+    if ('0' == payment_method_id):
+        payment_method_id = "NULL"
     category_id = request.args.get('category')
-    if (not isFloat(num_to_add)
-        or not payment_method_id.isnumeric()
-            or not category_id.isnumeric()):
-        return
+    if ('0' == category_id):
+        category_id = "NULL"
 
-    #INSERT INTO `affluence_schema`.`expenses` (`name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`, `notes`, `deleted`) VALUES ('סנפלינג כיפי', '150', NOW(), NOW(), '4', '3', NULL, '0');
-    insert_query = "INSERT INTO `expenses` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
-
-    db_execute_query(insert_query, True)
-
-    #return show()
-    return redirect("/web2", code=302)
+    # Call ADD function
+    if (db_add_expense(num_to_add, description_to_add, payment_method_id, category_id)):
+        return redirect("/web2", code=302)  #return show()
+    else:
+        return redirect("/error", code=302)  #return error
 
 @app.route("/hard_remove/", methods=["GET", "POST"])
 def hard_remove():
@@ -217,7 +227,7 @@ def sum():
     cur = db_execute_query(sum_query)
     # print the first column
     for row in cur.fetchall():
-        result += "<strong>" + str(row[0]) + "</strong><br />"
+        result += "<strong>" + str(round(row[0], 2)) + "</strong><br />"
         sum_this_month = row[0]
 
     if (None == sum_this_month):
@@ -306,6 +316,10 @@ def db_select_categories():
         res += "<option value='" + str(row[0]) + "'>" + str(row[1]) + "</option>"
     res += "</select>"
     return res
+
+@app.route("/error")
+def error():
+    return render_template("he/error.html")
 
 @app.route("/web2")
 def index():
