@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/he/style.css" rel="stylesheet" type="text/css">
+    <title>Affluence (beta)</title>
+    <!-- Bootstrap3, ref: https://www.w3schools.com/bootstrap/bootstrap_get_started.asp -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CDN. Ref = http://bootstrap.rtlcss.com/docs/4.0/getting-started/download/ -->
+    <!--<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css" integrity="sha384-P4uhUIGk/q1gaD/NdgkBIl3a6QywJjlsFJFk7SPRdruoGddvRVSwv5qFnvZ73cpz" crossorigin="anonymous">-->
+    <!--<script src="https://cdn.rtlcss.com/bootstrap/v4.0.0/js/bootstrap.min.js" integrity="sha384-54+cucJ4QbVb99v8dcttx/0JRx4FHMmhOWi4W+xrXpKcsKQodCBwAvu3xxkZAwsH" crossorigin="anonymous"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+    <!-- CDN / -->
+
+    {% block head %}
+    {#
+    Default HEAD content goes here
+    with extra nested blocks for children to override
+    if needed.
+    #}
+    {% endblock head %}
+</head>
+<body>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <header>{% block header %}{% endblock header %}</header>
+    {# Note: This assumes we *always* want a header #}
+    {% block content %}{% endblock content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <h1><img src="/static/media/beta-banner.png" alt="Smiley face" width="42" height="42">Affluence v0.1</h1>
+            </div>
+        </div>
+        <div class="alert alert-danger">
+            <strong>אירעה שגיאה</strong>  בניסיון הוספה ל-DB
+        </div>
+        <div class="row">
+            <a href="/web2">לחזרה לדף הראשי</a>
+        </div>
+    </div>
+</body>
+</html>
