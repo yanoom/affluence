@@ -38,38 +38,53 @@ app_location = determine_location()
 app_language = Language.Hebrew
 user_id = ""
 
-if (Location.local == app_location):
-    db = MySQLdb.connect(host="localhost",                                  # your host
-                         user="root",                                       # username
-                         passwd=db_pass,                                    # password
-                         db="affluence_schema",                             # name of the database
-                         charset="utf8",                                    # Essential to display hebrew
-                         use_unicode=True)                                  # Essential to display hebrew
-elif (Location.pythonanywhere == app_location):
-    db = MySQLdb.connect(host="yanoom.mysql.pythonanywhere-services.com",   # your host
-                         user="yanoom",                                     # username
-                         passwd=db_pass,                                    # password
-                         db="yanoom$affluence",                             # name of the database
-                         charset="utf8",                                    # Essential to display hebrew
-                         use_unicode=True)                                  # Essential to display hebrew
-else:
-    print("Error: No app location specified, system halt!")
-    sys.exit()
+def db_connect():
+    if (Location.local == app_location):
+        db = MySQLdb.connect(host="localhost",                                  # your host
+                             user="root",                                       # username
+                             passwd=db_pass,                                    # password
+                             db="affluence_schema",                             # name of the database
+                             charset="utf8",                                    # Essential to display hebrew
+                             use_unicode=True)                                  # Essential to display hebrew
+    elif (Location.pythonanywhere == app_location):
+        db = MySQLdb.connect(host="yanoom.mysql.pythonanywhere-services.com",   # your host
+                             user="yanoom",                                     # username
+                             passwd=db_pass,                                    # password
+                             db="yanoom$affluence",                             # name of the database
+                             charset="utf8",                                    # Essential to display hebrew
+                             use_unicode=True)                                  # Essential to display hebrew
+    else:
+        print("Error: No app location specified, system halt!")
+        sys.exit()
 
-def db_execute_query(db, query, commit = False):
-    # Create a Cursor object to execute queries.
-    cur = db.cursor()
+    return db
 
-    # Select data from table using SQL query.
+#initialy connect to db
+db = db_connect()
+
+def db_execute_query(query, commit = False):
+    global db
+
+    # Perform SQL query.
     try:
+        # Create a Cursor object to execute queries.
+        cur = db.cursor()
+
         cur.execute(query)
         if (commit):
             db.commit()
-    except MySQLdb.Error as e:
+    except (AttributeError, MySQLdb.OperationalError) as e:
         if (commit):
             db.rollback()
         print("Error occurred: " + str(e) + " ; query = " + query)
-        raise
+
+        # Reconnect to db and try again
+        db = db_connect()
+        # Create a Cursor object to execute queries.
+        cur = db.cursor()
+        cur.execute(query)
+        if (commit):
+            db.commit()
     return cur
 
 @app.route("/")
@@ -81,7 +96,7 @@ def hello():
 def db_select_current_year():
     # Select data from table using SQL query.
     select_query = "SELECT YEAR(now());"
-    cur = db_execute_query(db, select_query)
+    cur = db_execute_query(select_query)
 
     # Debug AttributeError: 'str' object has no attribute 'fetchall' issue
     if isinstance(cur, str):
@@ -123,7 +138,7 @@ def show():
     else:
         select_query += " AND (deleted = 0) ORDER BY last_updated DESC;"
 
-    cur = db_execute_query(db, select_query)
+    cur = db_execute_query(select_query)
 
     # Debug AttributeError: 'str' object has no attribute 'fetchall' issue
     if isinstance(cur, str):
@@ -141,6 +156,13 @@ def show():
                   "</div>"
     return result
 
+def isFloat(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
 @app.route("/add/", methods=["GET", "POST"])
 def add():
     #Input validation
@@ -148,7 +170,7 @@ def add():
     description_to_add = request.args.get('desc')
     payment_method_id = request.args.get('payment_method')
     category_id = request.args.get('category')
-    if (not num_to_add.isnumeric()
+    if (not isFloat(num_to_add)
         or not payment_method_id.isnumeric()
             or not category_id.isnumeric()):
         return
@@ -156,7 +178,7 @@ def add():
     #INSERT INTO `affluence_schema`.`expenses` (`name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`, `notes`, `deleted`) VALUES ('סנפלינג כיפי', '150', NOW(), NOW(), '4', '3', NULL, '0');
     insert_query = "INSERT INTO `expenses` (`user`, `name`, `amount`, `paid`, `last_updated`, `payment_method`, `category`) VALUES   ('" + user_id + "', '" + description_to_add + "', '" + num_to_add + "', NOW(), NOW()," + str(payment_method_id) + ", " + str(category_id) + ");"
 
-    db_execute_query(db, insert_query, True)
+    db_execute_query(insert_query, True)
 
     #return show()
     return redirect("/web2", code=302)
@@ -165,7 +187,7 @@ def add():
 def hard_remove():
 
     delete_query = "DELETE FROM `expenses` WHERE `idclient_test` = " + request.args.get('id') + ";"
-    db_execute_query(db, delete_query, True)
+    db_execute_query(delete_query, True)
 
     return show()
 
@@ -173,7 +195,7 @@ def hard_remove():
 def soft_delete():
 
     update_query = "UPDATE `expenses` SET `deleted` = 1 WHERE `idexpenses` = " + request.args.get('id') + ";"
-    db_execute_query(db, update_query, True)
+    db_execute_query(update_query, True)
 
     return redirect("/web2", code=302)
 
@@ -192,15 +214,18 @@ def sum():
     else:
         sum_query += " AND (deleted = 0);"
 
-    cur = db_execute_query(db, sum_query)
+    cur = db_execute_query(sum_query)
     # print the first column
     for row in cur.fetchall():
         result += "<strong>" + str(row[0]) + "</strong><br />"
         sum_this_month = row[0]
 
+    if (None == sum_this_month):
+        return "<strong>אין הוצאות!</strong>"
+
     # Select monthly_budget query
     monbudg_query = "SELECT valuesettings FROM `settings` WHERE `namesettings` = 'monthly_budget'";
-    cur = db_execute_query(db, monbudg_query)
+    cur = db_execute_query(monbudg_query)
     # print the first column
     for row in cur.fetchall():
         result += "<strong>העברת שפע רצויה: " + str(row[0]) + "</strong><br />"
@@ -262,7 +287,7 @@ def index2():
 
 def db_select_payment_methods():
     pm_query = "SELECT idpayment_methods, name FROM `payment_methods`"
-    cur = db_execute_query(db, pm_query)
+    cur = db_execute_query(pm_query)
 
     res = "<select class=\"form-control\" id=\"payment_method\" name=\"payment_method\">"
     res += "<option value='0' selected>אמצעי תשלום (ללא)</option>"
@@ -273,7 +298,7 @@ def db_select_payment_methods():
 
 def db_select_categories():
     cat_query = "SELECT idcategories, name FROM `categories`"
-    cur = db_execute_query(db, cat_query)
+    cur = db_execute_query(cat_query)
 
     res = "<select class=\"form-control\" id=\"category\" name=\"category\">"
     res += "<option value='0' selected>קטגוריה (ללא)</option>"
