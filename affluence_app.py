@@ -28,7 +28,11 @@ class Language(Enum):
 
 
 def determine_location():
-    if (50725104 == sys.hexversion):
+    pythonanywhere_locations = {
+        "python3.6": 50725104,
+        "python3.10": 50988528,
+    }
+    if (sys.hexversion in pythonanywhere_locations.values()):
         return Location.pythonanywhere
     if (50726640 == sys.hexversion):
         return Location.local
@@ -54,7 +58,7 @@ def db_connect():
                              charset="utf8",                                    # Essential to display hebrew
                              use_unicode=True)                                  # Essential to display hebrew
     else:
-        print("Error: No app location specified, system halt!")
+        print("Affluence App determine_location Error: No app location specified, system halt!")
         sys.exit()
 
     return db
