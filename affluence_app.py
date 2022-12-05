@@ -347,6 +347,25 @@ def index():
     else:
         return render_template("en/your_base.html", db_expenses=Markup(show()))
 
+@app.route("/debug")
+def debug_route():
+    global user_id
+    resp = ""
+    user_id = request.args.get('user') if (request.args.get('user')) else '2'
+    num_to_add = request.args.get('quantity')
+    description_to_add = request.args.get('desc')
+    payment_method_id = request.args.get('payment_method')
+    category_id = request.args.get('category')
+    resp += f"user_id = {user_id}, num_to_add = {num_to_add}, description_to_add = {description_to_add}, payment_method_id = {payment_method_id}, category_id = {category_id}"
+    if (not "NULL" == payment_method_id and not (payment_method_id.isnumeric())):
+        resp += "<br /><br />(not NULL == payment_method_id and not (payment_method_id.isnumeric()))"
+    if (not "NULL" == category_id and not (category_id.isnumeric())):
+        resp += "<br /><br />(not NULL == category_id and not (category_id.isnumeric())"
+    if (not isFloat(num_to_add)):
+        resp += "<br /><br />(not isFloat(num_to_add))"
+
+    return resp
+
 if __name__ == "__main__":
     app.run()
 
