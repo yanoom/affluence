@@ -5,7 +5,8 @@
 # TODO: Add deletion confirmation (referene: https://m.facebook.com/nataly.atik)
 # TODO: Add pie chart in the summary section: Total / expenses (divided to categories)
 
-from flask import Flask, request, render_template, Markup, redirect
+from flask import Flask, request, render_template, redirect
+from markupsafe import Markup
 # from hashlib import sha256
 import MySQLdb
 from enum import Enum
@@ -31,6 +32,7 @@ def determine_location():
     pythonanywhere_locations = {
         "python3.6": 50725104,
         "python3.10": 50988528,
+        "python3.13": 51184112,
     }
     if (sys.hexversion in pythonanywhere_locations.values()):
         return Location.pythonanywhere
@@ -58,7 +60,7 @@ def db_connect():
                              charset="utf8",                                    # Essential to display hebrew
                              use_unicode=True)                                  # Essential to display hebrew
     else:
-        print("Affluence App determine_location Error: No app location specified, system halt!")
+        print(f".~^~.~^~.~^~. Affluence App determine_location Error: app location unknown ({sys.hexversion}), system halt! .~^~.~^~.~^~.")
         sys.exit()
 
     return db
@@ -93,7 +95,7 @@ def db_execute_query(query, commit = False):
 
 @app.route("/")
 def hello():
-    res = "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
+    res = "Hello World!<br />Did you mean to go to<a href='http://127.0.0.1:5000/web2'>http://127.0.0.1:5000/web2</a>?<br />" + "Python version = " + sys.version + "<br />sys.hexversion = " + str(sys.hexversion) + "<br />Location determined = " + determine_location().name
     res += "</br> current year = " + db_select_current_year()
     return res
 
@@ -357,11 +359,11 @@ def debug_route():
     payment_method_id = request.args.get('payment_method')
     category_id = request.args.get('category')
     resp += f"user_id = {user_id}, num_to_add = {num_to_add}, description_to_add = {description_to_add}, payment_method_id = {payment_method_id}, category_id = {category_id}"
-    if (not "NULL" == payment_method_id and not (payment_method_id.isnumeric())):
+    if (not None == payment_method_id and not "NULL" == payment_method_id and not (payment_method_id.isnumeric())):
         resp += "<br /><br />(not NULL == payment_method_id and not (payment_method_id.isnumeric()))"
-    if (not "NULL" == category_id and not (category_id.isnumeric())):
+    if (not None == category_id and not "NULL" == category_id and not (category_id.isnumeric())):
         resp += "<br /><br />(not NULL == category_id and not (category_id.isnumeric())"
-    if (not isFloat(num_to_add)):
+    if (not None == num_to_add and not isFloat(num_to_add)):
         resp += "<br /><br />(not isFloat(num_to_add))"
 
     return resp
